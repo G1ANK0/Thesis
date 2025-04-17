@@ -1,0 +1,222 @@
+Okay, let's map out a comprehensive roadmap for your entire thesis project, starting from 
+today. This plan integrates your milestones and provides actionable steps for each phase. 
+Assume a potential timeline of roughly 6 months (adjust based on your actual deadline and credits).
+
+Guiding Principles:
+    - Iterative Progress: Build, test, and refine continuously.
+    - Documentation is Key: Write notes, summaries, and documentation as you go, not just  
+      at the end. This forms the basis of your thesis document.
+    - Supervisor Communication: Schedule regular (e.g., bi-weekly) meetings with your   
+      supervisor to discuss progress, challenges, and next steps.
+    - Version Control: Use Git from Day 1 for all code and potentially your thesis draft   
+      (using Markdown or LaTeX).
+    - Task Management: Use a simple tool (like Trello, a spreadsheet, or even a text file) 
+      to track tasks within each phase.
+
+
+Phase 0: Setup & Kick-off (Week 1):
+
+    - Goal: Establish foundations for project management, research, and initial 
+            understanding.
+    - Tasks:
+        1) Clarify Requirements: Reread the Thesis mail.txt. Note any immediate questions 
+                                 for your supervisor.
+        2) Set up Project Management:
+            - Create a dedicated project folder.
+            - Initialize a Git repository (git init). Make initial commit.
+            - Choose and set up a task management system.
+            - Set up a system for notes/research (e.g., Zotero for references, Obsidian/
+              Notion/Word for notes).
+        3) Initial Supervisor Meeting: Discuss the plan, scope, any immediate questions, 
+                                       preferred communication style, and meeting          
+                                       frequency. Confirm technology stack 
+           expectations (Python/Java, JS, MySQL).
+        4) Preliminary Reading: Start broad reading on asymmetric crypto concepts (RSA/ECC 
+                                basics), the idea of client-side encryption in web apps, 
+                                and core GDPR principles related to data security. Don't   
+                                go too deep yet.
+
+    - Output: Project structure set up, initial notes, confirmed plan with supervisor.
+
+
+Phase 1: Preliminary Study & Research (Weeks 1-4) - Milestone 1 Focus:
+
+    - Goal: Gain deep theoretical understanding of cryptography, relevant technologies, 
+            and legal context.
+
+    - Tasks:
+        1) Deep Dive: Asymmetric Cryptography:
+            - Study RSA and ECC algorithms, padding schemes (OAEP), key sizes, pros/cons.
+            - Research digital signatures (may be relevant later, even if not primary   
+                focus).
+            - Sources: Crypto textbooks, NIST publications, academic papers, reliable   
+                       online tutorials.
+        2) Deep Dive: Web Cryptography API:
+            - Thoroughly read MDN documentation: SubtleCrypto methods (generateKey,        
+                importKey, exportKey, encrypt, decrypt).
+            - Understand key formats (SPKI, PKCS#8, JWK) and the extractable flag 
+              implications.
+            - Look for examples and limitations.
+        3) Deep Dive: Server-Side Technologies:
+            - Review chosen backend language's crypto libraries (Python cryptography or 
+                Java JCE/Bouncy Castle). How do they handle keys?
+            - Review basics of chosen web framework (Flask/Django or Spring).
+            - Review basic MySQL interactions (connecting, schema design).
+        4) Deep Dive: Key Management:
+            - Research best practices for client-side private key storage (this is 
+                CRITICAL and HARD). Explore password-based key derivation (PBKDF2), secure 
+                storage options (IndexedDB vs localStorage, OS-level storage?), non-
+                extractable keys. Understand the security vs. usability trade-offs.
+            - Sources: NIST SP 800-57, OWASP Key Management Cheat Sheet, security blogs/
+                articles.
+        5) Deep Dive: GDPR & Data Protection:
+            - Identify specific GDPR articles relevant to data security (Art. 32), 
+                encryption, controller/processor roles.
+            - Understand the definition of "sensitive data" and requirements for its 
+                protection.
+            - Sources: Official GDPR text, guidance from Data Protection Authorities.
+        6) Synthesize & Write: Start drafting the theoretical background sections of your 
+             thesis. Compile findings into the Milestone 1 Report.
+
+    - Output: Milestone 1: Relazione teorica su crittografia asimmetrica e normative di 
+                protezione dei dati. (Solid understanding documented).
+
+
+Phase 2: System Design (Weeks 5-7) - Milestone 2 Focus: 
+
+    - Goal: Define the detailed architecture and data flow of your system.
+
+    - Tasks:
+        1) Finalize Technology Choices: Confirm specific libraries (e.g., Flask, 
+             cryptography lib, specific JS frameworks if any).
+        2) Define Crypto Specifications: Choose specific algorithms (e.g., RSA-OAEP 4096-  
+             bit, SHA-256 hash). Justify choices based on research.
+        3) Design System Architecture: Draw diagrams showing Browser <-> Web Server <-> 
+             Database interactions. Identify components.
+        4) Map Data Flows: Create sequence diagrams for key user actions:
+            - Registration (key gen, public key storage)
+            - Login (loading/unlocking private key)
+            - Data Submission (encryption, transmission, server storage)
+            - Data Retrieval (server retrieval, transmission, decryption)
+        5) API Specification: Define RESTful API endpoints on the server (URLs, methods, 
+             expected JSON request/response formats).
+        6) Database Schema Design: Define table structures (Users, SensitiveData) with 
+             precise column names and data types (e.g., VARCHAR for username, TEXT or BLOB 
+             for public key, BLOB for encrypted data).
+        7) Define Private Key Handling Strategy: Commit to a specific client-side storage 
+             mechanism based on Phase 1 research (e.g., password-derived key encrypting an 
+             extractable private key stored in IndexedDB). Document the chosen process and 
+             its rationale/risks.
+        8) Outline Security Measures: List security considerations beyond core crypto 
+             (HTTPS, authentication, input validation, basic server hardening).
+        9) Write Design Documentation: Compile all the above into the Milestone 2   
+             document.
+
+    - Output: Milestone 2: Documentazione di progettazione architetturale e flusso dei     
+                           dati nel sistema.
+
+Phase 3: Prototype Implementation (Weeks 8-14) - Milestone 3 Focus
+
+    - Goal: Build a functional prototype based on the design specification.
+
+    - Tasks: (Follow the detailed implementation roadmap provided previously)
+        1) Setup Development Environment: Project structure, database, install 
+           dependencies.
+        2) Implement Server Backend: Basic Flask/Java app, database models, user 
+             registration (storing public key), API endpoints for data storage/retrieval   
+             (initially without authentication).
+        3) Implement Client Frontend: Basic HTML pages (register, main app view).
+        4) Implement Client Crypto Logic (JS/Web Crypto API):
+            - Key pair generation.
+            - Key import/export.
+            - Encryption function.
+            - Decryption function.
+        5) Integrate Registration Flow: Client generates keys, sends public key to server 
+             during registration.
+        6) Implement Client Key Management: Implement the chosen strategy for storing/
+             retrieving/unlocking the private key.
+        7) Implement Core Data Flow:
+            - Client encrypts data using public key, sends to server.
+            - Server stores encrypted data.
+            - Client requests data, server sends encrypted data.
+            - Client decrypts data using private key, displays it.
+        8) Add Basic Authentication: Implement simple login/session management on the 
+             server to protect endpoints.
+        9) Iterative Testing & Debugging: Test each component as you build it. Use browser 
+             developer tools extensively.
+
+    - Output: Milestone 3: Prototipo funzionante con crittografia dei dati sensibili e 
+                           gestione delle chiavi. (Codebase on Git).
+
+
+Phase 4: Testing & Validation (Weeks 15-17) - Milestone 4 Focus
+
+    - Goal: Systematically test the prototype for functionality, security, and 
+            performance.
+
+    - Tasks:
+        1) Develop Test Plan: Outline specific test cases for functionality, security, and 
+             performance.
+        2) Functional Testing: Verify all features work as designed (registration, 
+             encryption, storage, retrieval, decryption) with various inputs (different 
+             users, data types).
+        3) Security Testing:
+            - Attempt to access data without authorization.
+            - Inspect browser storage - how protected is the private key? (Document 
+                weaknesses honestly).
+            - Check for basic web vulnerabilities (e.g., input validation on server).
+            - Does HTTPS work correctly (if configured)?
+        4) Performance Testing:
+            - Measure time for key generation.
+            - Measure time for encryption/decryption (client-side).
+            - Assess overall responsiveness – is the crypto overhead noticeable?
+        5) Usability Assessment: Is the key handling process understandable for a user?
+        6) Analyze & Document Results: Record all test outcomes, identify bugs, 
+             vulnerabilities, and performance bottlenecks.
+        7) Refine Prototype (Optional): Fix critical bugs found during testing if time 
+             permits.
+        8) Write Test Report: Summarize the testing process, results, and analysis.
+
+    - Output: Milestone 4: Report di test, validazione della sicurezza e performance del 
+                           sistema.
+
+
+Phase 5: Thesis Writing & Finalization (Weeks 18-24) - Milestone 5 Focus
+
+    - Goal: Produce the final thesis document and prepare for presentation.
+
+    - Tasks:
+        1) Structure Thesis Document: Create the main sections based on a standard thesis 
+             format (Intro, Background, Design, Implementation, Testing, Results, 
+             Discussion, Conclusion, Future Work, References, Appendix).
+        2) Draft Content (Leverage previous work):
+            - Expand Milestone 1 report into Background/Theory chapters.
+            - Expand Milestone 2 document into Design chapter.
+            - Describe the implementation process, challenges, and key code structures 
+                (Implementation chapter).
+            - Incorporate Milestone 4 report into Testing & Results chapters.
+        3) Write Critical Sections:
+            - Introduction: Clearly state the problem, motivation, objectives, and scope.
+            - Discussion: Analyze the prototype's success in meeting goals. CRITICALLY 
+                evaluate the strengths and weaknesses/limitations, especially regarding 
+                client-side key security and usability. Compare your approach to        
+                alternatives.
+            - Conclusion: Summarize the project and key findings.
+            - Future Work: Suggest improvements, extensions, or alternative approaches.
+        4) Refine & Edit: Review the entire document for clarity, consistency, grammar, 
+             and formatting. Ensure all figures and tables are properly referenced. Check 
+             citations.
+        5) Bibliography: Format references correctly.
+        6) Prepare Presentation: Create slides summarizing the thesis (problem, approach, 
+             design, results, conclusion). Practice the presentation.
+        7) Final Review with Supervisor: Get feedback on the draft thesis and 
+             presentation.
+        8) Submit: Submit the final thesis document according to university guidelines.
+
+    - Output: Milestone 5: Consegna e presentazione della tesi finale.
+
+Getting Started This Week (Week 1):
+    - Do Phase 0 tasks (Setup, Supervisor meeting).
+    - Start Phase 1 Task 4: Begin broad reading on asymmetric crypto concepts and the idea 
+                            of client-side web encryption.
+    - Set up your Git repository immediately.
